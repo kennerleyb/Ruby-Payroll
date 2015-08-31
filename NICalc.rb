@@ -27,6 +27,7 @@ class UkNationalInsurance
 		@payFrequency = payFrequency
 		@payPeriods = payPeriods
 		@flags = flags
+		@cat = nil
 	end
 
 	def Calc()
@@ -35,7 +36,7 @@ class UkNationalInsurance
 		taxYear = ((Date.parse(payDate) - 5) << 3).year
 		raise "Invalid Tax Year #{taxYear}" unless SUPPORTED_YEARS.include? taxYear
 		#then call the correct function to determine the NI category
-		niPay.cat = self.send("NiCategory#{taxYear}")
+		cat = self.send("NiCategory#{taxYear}")
 		#TODO - calculate under 21 rather than use a flag
 		#TODO - calculate overstatepensionage, using dob and dobverified
 		#TODO - handle multiple payments being passed, for now just reject
