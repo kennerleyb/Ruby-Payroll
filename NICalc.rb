@@ -5,6 +5,7 @@ class UkLegislation
 end
 
 class NiPay
+	#TODO - could just make the UKNationalInsurance object the structure?
 	attr_accessor :value, :payDate, :payFrequency, :payPeriods, :flags
 	def initialize(value:, payDate:, payFrequency:, payPeriods:1, flags:)
 		@payValue = value
@@ -25,11 +26,13 @@ class UkNationalInsurance
 		taxYear = ((Date.parse(niPay.payDate) - 5) << 3).year
 		raise "Invalid Tax Year #{taxYear}" unless SUPPORTED_YEARS.include? taxYear
 		#then call the correct function to determine the NI category
-		niCat = self.send("NiCategory#{taxYear}", niPay.flags, niPay.payDate)
+		niPay.cat = self.send("NiCategory#{taxYear}", niPay.flags, niPay.payDate)
 		#TODO - calculate under 21 rather than use a flag
 		#TODO - calculate overstatepensionage, using dob and dobverified
 		#TODO - handle multiple payments being passed, for now just reject
 		#TODO - what about directors NI?
+		niPay.bandings = self.send("NiBandings#{taxYear}", niPay.flags, niPay.payDate)
+		niPay.deductions = self.send("NiDeductions#{taxYear}", niPay.flags, niPay.payDate)
 	end
 
 	def self.NiCategory2015 (flags, effDate)

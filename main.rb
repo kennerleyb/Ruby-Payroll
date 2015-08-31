@@ -10,6 +10,7 @@ bob = Employee.new
 #TODO - contracted out and mariner flags come from job details
 #       so will be a separate DateEffective?
 #       As will apprentice flags next year
+#       Maybe just a merge function in DateEffective to combine them
 bob.dateOfBirth = '1980-01-01'
 bob.employmentStartDate = '2010-01-01'
 bob.legislation.add(:DateOfBirth, bob.dateOfBirth)
