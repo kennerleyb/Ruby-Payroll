@@ -23,14 +23,13 @@ bob.legislation.add(:NiUnder21, false)
 bob.legislation.add(:NiDeferred, false)
 bob.legislation.add(:DateOfBirthVerified, true)
 
-niPay = NiPay.new(	value: 2000.00,
-					payDate: '2015-05-31',
-					payFrequency: :month,
-					flags: bob.legislation
-					)
+niPay = UkNationalInsurance.new(	value: 2000.00,
+									payDate: '2015-05-31',
+									payFrequency: :month,
+									flags: bob.legislation
+									)
 
-
-puts UkNationalInsurance::Calc(niPay:niPay)
+puts niPay.Calc
 # puts niPay.inspect
 # puts UkNationalInsurance::SUPPORTED_YEARS
 # puts bob.legislation.inspect
