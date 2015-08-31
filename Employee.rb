@@ -1,12 +1,27 @@
-
-
 #------------------------------------------------------------------
 class Employee
 	attr_accessor :legislation, :flags, :dateOfBirth, :employmentStartDate
+	attr_accessor :xperson, :xlegislation, :xjob
+	
 	def initialize
 		@legislation = DateEffective.new
 		@dateOfBirth = nil
 		@employmentStartDate = nil
+
+		#new data structures
+		@xperson = DateEffective.new
+		@xlegislation = {}
+		@xlegislation[:ukNi] = DateEffective.new
+		@xlegislation[:age] = DateEffective.new
+		@xjobs = {}		
+	end
+end
+
+class Job
+	def initialize
+		@xdata = DateEffective.new
+		@xlegislation = {}
+		@xlegislation[:ukNi]= DateEffective.new
 	end
 end
 
@@ -18,6 +33,8 @@ class DateEffective
 #is a hash of arrays containing ElementData structs.
 #The hash key is the name of the element.
 #Value is an array of struct ELementData
+#TODO - no need to include id in the ElementData struct as well as the key?
+#TODO - need to get rid of magic date, replace with nil and deal with it
 
 	def initialize()
 		@contents = {}

@@ -1,4 +1,5 @@
 require 'date'
+require 'yaml'
 require_relative 'NICalc.rb'
 require_relative 'Employee.rb'
 $MAGIC_DATE = '1970-01-01'
@@ -36,16 +37,18 @@ puts niPay.Calc
 # puts bob.legislation.valueAtDate(:NiMariner, '2015-08-26')
 
 #I THINK THE DATA SHOULD LOOK LIKE THIS
-# bob.person.add(:DateOfBirth, '1980-01-01')
-# bob.person.add(:DateOfBirthVerified, true)
-# bob.person.add(:Forenames, %w[Bob, Archibald, Frederick])
-# bob.person.add(:Surname, %w(O'Toole)
-# bob.legislation.ukni.add(:NiSpecialExemption, false)
-# bob.legislation.ukni.add(:NiMariner, false)
-# bob.legislation.ukni.add(:NiMarriedReduced, false)
-# bob.legislation.ukni.add(:NiDeferred, false)
-# bob.legislation.age.add(:StatePensionAge, nil)
-# bob.legislation.age.add(:Age21, nil)
-# bob.job.0.add(:Id, 'Job1')
-# bob.job.0.add(:StartDate, '2015-01-01')
-# bob.job.0.legislation.ukni.add(:NiContractedOut, true)
+bob.xperson.add(:DateOfBirth, '1980-01-01')
+bob.xperson.add(:DateOfBirthVerified, true)
+bob.xperson.add(:Forenames, %w[Bob, Archibald, Frederick])
+bob.xperson.add(:Surname, %w(O'Toole))
+bob.xlegislation[:ukNi].add(:NiSpecialExemption, false)
+bob.xlegislation[:ukNi].add(:NiMariner, false)
+bob.xlegislation[:ukNi].add(:NiMarriedReduced, false)
+bob.xlegislation[:ukNi].add(:NiDeferred, false)
+bob.xlegislation[:age].add(:StatePensionAge, nil)
+bob.xlegislation[:age].add(:Age21, nil)
+# jobno = bob.xjobs.add(:Id, 'Job1')
+# bob.xjobs[jobno].xdata.add(:StartDate, '2015-01-01')
+# bob.xjobs[jobno].xlegislation[ukni].add(:NiContractedOut, true)
+
+puts bob.xlegislation.to_yaml
