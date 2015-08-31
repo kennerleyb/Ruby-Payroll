@@ -20,14 +20,15 @@ class UkNationalInsurance
 	SUPPORTED_YEARS = [2015]
 	
 	def self.Calc(niPay:)
-		#need to calculate which tax year the payment date is in - subtract 5 days and 3 months
+		#need to calculate which tax year the payment date is in
+		#subtract 5 days and 3 months
 		taxYear = ((Date.parse(niPay.payDate) - 5) << 3).year
 		raise "Invalid Tax Year #{taxYear}" unless SUPPORTED_YEARS.include? taxYear
 		#then call the correct function to determine the NI category
 		niCat = self.send("NiCategory#{taxYear}", niPay.flags, niPay.payDate)
 		#TODO - calculate under 21 rather than use a flag
-		#TODO - calculate overstatepensionage, but might need an additional flag for DOB confirmed
-		#TODO - handle multiple payments being passed, for now just reject them as unimplemented
+		#TODO - calculate overstatepensionage, using dob and dobverified
+		#TODO - handle multiple payments being passed, for now just reject
 		#TODO - what about directors NI?
 	end
 
@@ -35,32 +36,33 @@ class UkNationalInsurance
 		currFlags = flags.valuesAtDate(effDate)
 		if currFlags[:NiSpecialExemption] then 'X'
 		elsif currFlags[:NiMariner]
-			#HERE FOR MARINERS
+			#MARINERS
 			if currFlags[:NioverStatePensionAge] then 'W'
-			elsif currFlags[:NicontractedOut] #mariner=Y, pension=N - cats N, O, P, Q, R, T, V, Y
-				#MARINERS, CONTRACTED OUT
+			elsif currFlags[:NicontractedOut]
+				#MARINERS, CONTRACTED OUT - N, O, V
 				if currFlags[:NiMarriedReduced] then 'O'
-				elsif currFlags[:NiUnder21] then 'V' else 'N'	#there is no deferred contracted out rate for mariners
+				elsif currFlags[:NiUnder21] then 'V' else 'N'
+				#there is no deferred contracted out rate for mariners
 				end
 			else
-				#MARINERS, NOT CONTRACTED OUT
+				#MARINERS, NOT CONTRACTED OUT - P, Q, R, T, Y
 				if currFlags[:NiMarriedReduced] then 'T'
 				elsif currFlags[:NiUnder21]
 					if currFlags[:NiDeferred] then 'P' else 'Y' end
 				elsif currFlags[:NiDeferred] then 'Q' else 'R' 
 				end
 			end
-		else #HERE FOR NON-MARINERS
+		else #NON-MARINERS
 			if currFlags[:NiOverStatePensionAge] then 'C'
-			elsif currFlags[:NiContractedOut] #mariner=N, pension=N - cats A, B, D, E, I, J, K, L, M, Z
-				#NON-MARINERS, CONTRACTED OUT
+			elsif currFlags[:NiContractedOut]
+				#NON-MARINERS, CONTRACTED OUT - D, E, I, K, L
 				if currFlags[:NiMarriedReduced] then 'E'
 				elsif currFlags[:NiUnder21]
 					if currFlags[:NiDeferred] then 'K' else 'I' end
 				elsif currFlags[:NiDeferred] then 'L' else 'D'
 				end
-			else #mariner=N, contractOut=N - cats A, B, J, M, Z
-				#NON-MARINERS, NOT CONTRACTED OUT
+			else
+				#NON-MARINERS, NOT CONTRACTED OUT - A, B, J, M, Z
 				if currFlags[:NiMarriedReduced] then 'B'
 				elsif currFlags[:NiUnder21]
 					if currFlags[:NiDeferred] then 'Z' else 'M' end

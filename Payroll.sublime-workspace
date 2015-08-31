@@ -51,7 +51,15 @@
 			"file": "Employee.rb",
 			"settings":
 			{
-				"buffer_size": 669,
+				"buffer_size": 2631,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mongo.rb",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		},
@@ -59,16 +67,15 @@
 			"file": "NICalc.rb",
 			"settings":
 			{
-				"buffer_size": 5543,
-				"line_ending": "Windows",
-				"name": "def NICalc"
+				"buffer_size": 4725,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "test.rb",
 			"settings":
 			{
-				"buffer_size": 60,
+				"buffer_size": 149,
 				"line_ending": "Windows"
 			}
 		}
@@ -97,6 +104,9 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Bryan/Google Drive/dev/Ruby-Payroll/test.rb",
+		"/C/Users/Bryan/Google Drive/dev/Ruby-Payroll/NICalc.rb",
+		"/C/Users/Bryan/Google Drive/dev/Ruby-Payroll/Employee.rb",
 		"/C/Users/Bryan/Google Drive/dev/Ruby/test.rb"
 	],
 	"find":
@@ -159,15 +169,15 @@
 					"file": "Employee.rb",
 					"settings":
 					{
-						"buffer_size": 669,
+						"buffer_size": 2631,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14,
-								14
+								452,
+								453
 							]
 						],
 						"settings":
@@ -183,10 +193,10 @@
 				},
 				{
 					"buffer": 1,
-					"file": "NICalc.rb",
+					"file": "mongo.rb",
 					"settings":
 					{
-						"buffer_size": 5543,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -194,12 +204,43 @@
 						[
 							[
 								0,
-								5543
+								0
 							]
 						],
 						"settings":
 						{
-							"auto_name": "def NICalc",
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "NICalc.rb",
+					"settings":
+					{
+						"buffer_size": 4725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
@@ -216,19 +257,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "test.rb",
 					"settings":
 					{
-						"buffer_size": 60,
+						"buffer_size": 149,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								59,
-								59
+								0,
+								0
 							]
 						],
 						"settings":
@@ -267,12 +308,19 @@
 				0,
 				2,
 				1
+			],
+			[
+				2,
+				0,
+				3,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.716796875,
+			0.439128630705,
+			0.842157676349,
 			1.0
 		],
 		"rows":
@@ -308,7 +356,7 @@
 		"width": 0.0
 	},
 	"show_minimap": true,
-	"show_open_files": false,
+	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 150.0,
