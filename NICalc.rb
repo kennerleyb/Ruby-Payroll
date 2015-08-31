@@ -4,8 +4,22 @@ class UkLegislation
 	CONTAINS = [:UkNationalInsurance, :UkPaye]
 end
 
-class NiPay
-	#TODO - could just make the UKNationalInsurance object the structure?
+# class NiPay
+# 	#TODO - could just make the UKNationalInsurance object the structure?
+# 	attr_accessor :value, :payDate, :payFrequency, :payPeriods, :flags
+# 	def initialize(value:, payDate:, payFrequency:, payPeriods:1, flags:)
+# 		@payValue = value
+# 		@payDate = payDate
+# 		@payFrequency = payFrequency
+# 		@payPeriods = payPeriods
+# 		@flags = flags
+# 	end
+# end
+
+#------------------------------------------------------------------
+class UkNationalInsurance
+	SUPPORTED_YEARS = [2015]
+	
 	attr_accessor :value, :payDate, :payFrequency, :payPeriods, :flags
 	def initialize(value:, payDate:, payFrequency:, payPeriods:1, flags:)
 		@payValue = value
@@ -14,29 +28,24 @@ class NiPay
 		@payPeriods = payPeriods
 		@flags = flags
 	end
-end
 
-#------------------------------------------------------------------
-class UkNationalInsurance
-	SUPPORTED_YEARS = [2015]
-	
-	def self.Calc(niPay:)
+	def Calc()
 		#need to calculate which tax year the payment date is in
 		#subtract 5 days and 3 months
-		taxYear = ((Date.parse(niPay.payDate) - 5) << 3).year
+		taxYear = ((Date.parse(payDate) - 5) << 3).year
 		raise "Invalid Tax Year #{taxYear}" unless SUPPORTED_YEARS.include? taxYear
 		#then call the correct function to determine the NI category
-		niPay.cat = self.send("NiCategory#{taxYear}", niPay.flags, niPay.payDate)
+		niPay.cat = self.send("NiCategory#{taxYear}")
 		#TODO - calculate under 21 rather than use a flag
 		#TODO - calculate overstatepensionage, using dob and dobverified
 		#TODO - handle multiple payments being passed, for now just reject
 		#TODO - what about directors NI?
-		niPay.bandings = self.send("NiBandings#{taxYear}", niPay.flags, niPay.payDate)
-		niPay.deductions = self.send("NiDeductions#{taxYear}", niPay.flags, niPay.payDate)
+		# niPay.bandings = self.send("NiBandings#{taxYear}", niPay.flags, payDate)
+		# niPay.deductions = self.send("NiDeductions#{taxYear}", niPay.flags, payDate)
 	end
 
-	def self.NiCategory2015 (flags, effDate)
-		currFlags = flags.valuesAtDate(effDate)
+	def NiCategory2015 ()
+		currFlags = flags.valuesAtDate(payDate)
 		if currFlags[:NiSpecialExemption] then 'X'
 		elsif currFlags[:NiMariner]
 			#MARINERS
